@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<link rel="stylesheet" type="text/css" href="webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
+
+<head>
+	<meta charset="utf-8">
+	<title>Ajout des Equipes</title>
+</head>
+
+<body>
+	<div th:replace="template"></div>
+	<div class="container mt-5">
+		<div class="card">
+			<div class="card-header"> Ajout des Equipes </div>
+			<div class="card-body">
+				<form th:action="@{saveEquipe}" method="post">
+					
+					<input hidden name="page" class="form-control" th:value="${page}" />
+					<input hidden name="size" class="form-control" th:value="${size}" />
+					
+					<div class="form-group">
+						<label class="control-label" hidden>ID Equipe :</label>
+						<input type="hidden" name="idEquipe" class="form-control" th:value="${equipe.idEquipe}" />
+					</div>
+					<div class="form-group">
+						<label class="control-label">Nom Equipe :</label>
+						<input type="text" name="nomEquipe" class="form-control" th:value="${equipe.nomEquipe}" />
+						<span th:errors=${equipe.nomEquipe} class="text-danger"> </span>
+					</div>
+					<div class="form-group">
+						<label class="control-label">Rank Equipe :</label>
+						<input type="text" name="rankEquipe" class="form-control" th:value="${equipe.rankEquipe}" />
+						<span th:errors=${equipe.rankEquipe} class="text-danger"> </span>
+					</div>
+					<div class="form-group">
+						<label class="control-label">date création :</label>
+						<input type="date" name="dateCreation" class="form-control" th:value="${equipe.dateCreation}" />
+						<span th:errors=${equipe.dateCreation} class="text-danger"> </span>
+					</div>
+					<div class="form-group">
+						<label class="control-label">Ligue :</label>
+						<select name="ligue" class="form-control" th:value="${equipe.ligue.idLigue}"
+							th:if="${!#strings.isEmpty(equipe.ligue)}">
+							<option th:each="c:${ligues}" th:if="${mode=='edit'}" th:value="${c.idLigue}"
+								th:text="${c.nomLigue}" th:selected="${ c.idLigue==equipe.ligue.idLigue}">
+							</option>
+						</select>
+						<!-- s'il s'agit d'un ajout (mode==new) ou d'une modification d'un equipe ayant une catégorie null -->
+						<select name="ligue" class="form-control" th:if="${#strings.isEmpty(equipe.ligue)}">
+							<option th:each="c:${ligues}" th:value="${c.idLigue}" th:text="${c.nomLigue}">
+							</option>
+						</select>
+					</div>
+					<div>
+						<button type="submit" class="btn btn-primary">Ajouter</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
