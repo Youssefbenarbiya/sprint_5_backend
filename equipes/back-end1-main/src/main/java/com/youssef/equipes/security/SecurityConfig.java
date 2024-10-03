@@ -4,6 +4,7 @@ package com.youssef.equipes.security;
 
 import java.util.Collections;
 
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -17,6 +18,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
+
+import com.youssef.users.security.JWTAuthorizationFilter;
 
 import jakarta.servlet.http.HttpServletRequest;
 @Configuration
@@ -47,10 +50,10 @@ public class SecurityConfig {
 
 	.requestMatchers("/api/all/**").hasAnyAuthority("ADMIN","USER")
 	.requestMatchers(HttpMethod.GET,"/api/getbyid/**").hasAnyAuthority("ADMIN","USER")
-	//.requestMatchers(HttpMethod.POST,"/api/addevent/**").hasAnyAuthority("ADMIN")
-	.requestMatchers(HttpMethod.PUT,"/api/updateevent/**").hasAuthority("ADMIN")
-	.requestMatchers(HttpMethod.DELETE,"/api/delevent/**").hasAuthority("ADMIN")
-	.requestMatchers("/type/**").hasAnyAuthority("ADMIN","USER")
+	.requestMatchers(HttpMethod.POST,"/api/addeqip/**").hasAnyAuthority("ADMIN")
+	.requestMatchers(HttpMethod.PUT,"/api/updateeqip/**").hasAuthority("ADMIN")
+	.requestMatchers(HttpMethod.DELETE,"/api/deleqip/**").hasAuthority("ADMIN")
+	.requestMatchers("/ligue/**").hasAnyAuthority("ADMIN","USER")
 	.anyRequest().authenticated() )
 	.addFilterBefore(new JWTAuthorizationFilter(),
 	 UsernamePasswordAuthenticationFilter.class);
